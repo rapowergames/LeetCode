@@ -1,0 +1,3 @@
+﻿  Main.cpp
+Main.obj : error LNK2019: unresolved external symbol "public: class std::vector<int,class std::allocator<int> > __thiscall TwoSumsClass::twoSum(class std::vector<int,class std::allocator<int> > &,int)" (?twoSum@TwoSumsClass@@QAE?AV?$vector@HV?$allocator@H@std@@@std@@AAV23@H@Z) referenced in function _main
+C:\Users\yoshi\Dropbox\RA GameS\Projects\LeetCode\TwoSums\TwoSums\Debug\TwoSums.exe : fatal error LNK1120: 1 unresolved externals
