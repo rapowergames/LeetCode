@@ -1,15 +1,31 @@
 #include "RomantToInteger.h"
 
+RomanToInteger::RomanToInteger()
+{
+	currentRomanLetter[0] = 1000;
+	currentRomanLetter[1] = 500;
+	currentRomanLetter[2] = 100;
+	currentRomanLetter[3] = 50;
+	currentRomanLetter[4] = 10;
+	currentRomanLetter[5] = 5;
+	currentRomanLetter[6] = 1;
+}
+
 int RomanToInteger::romanToInt(string s)
 {
 	//s = toupper(s);
+	unsigned int currentRomanIndex = 0;
 	int romanInteger = 0;
 	int convertedNumber = 0;
 	SpecialNumbers isSpecial = Normal;
 
-	for (int i = 0; i < s.size(); ++i)
+	for (unsigned int i = 0; i < s.size(); ++i)
 	{
 		convertedNumber = romanValue(s[i], isSpecial);
+
+		if (convertedNumber == -1)
+			return -1;
+
 
 		if (isSpecial == Normal)
 		{
@@ -35,8 +51,8 @@ int RomanToInteger::romanToInt(string s)
 				}
 				else
 				{
-					romanInteger += nextConvertedNumber + convertedNumber;
-					isSpecial = isNextSpecial;
+					romanInteger += convertedNumber;
+					--i;
 				}
 				break;
 			case X:
@@ -47,8 +63,8 @@ int RomanToInteger::romanToInt(string s)
 				}
 				else
 				{
-					romanInteger += nextConvertedNumber + convertedNumber;
-					isSpecial = isNextSpecial;
+					romanInteger += convertedNumber;
+					--i;
 				}
 				break;
 			case I:
@@ -59,8 +75,8 @@ int RomanToInteger::romanToInt(string s)
 				}
 				else
 				{
-					romanInteger += nextConvertedNumber + convertedNumber;
-					isSpecial = isNextSpecial;
+					romanInteger += convertedNumber;
+					--i;
 				}
 				break;
 			default:
@@ -106,6 +122,10 @@ int RomanToInteger::romanValue(char romanLetter, SpecialNumbers &isSpecial)// bo
 		break;
 	}
 
-	return 0;
+	return -1;
 }
 
+int RomanToInteger::romanValue(char romanLetter, unsigned int currentRoman)
+{
+	return 0;
+}
