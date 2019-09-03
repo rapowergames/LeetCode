@@ -2,6 +2,11 @@
 
 string AddBinaryNumbers::AddBinary(string a, string b)
 {
+	return stringAddition(a, b);
+	// stoi method
+	if (a.size() > MAX_STRING_SIZE || b.size() > MAX_STRING_SIZE)
+		return "INVALID";
+
 	int binary0 = stoi(a, nullptr, 2);// GetBinaryValue(a);
 	int binary1 = stoi(b, nullptr, 2);// GetBinaryValue(b);
 
@@ -11,28 +16,102 @@ string AddBinaryNumbers::AddBinary(string a, string b)
 	return ConvertBinaryToString(binary0 + binary1);
 }
 
-int AddBinaryNumbers::GetBinaryValue(string binaryNumber)
+string AddBinaryNumbers::stringAddition(string topBinary, string bottomBinary)
 {
-	int binaryExponent = 0;
-	int binaryValue = 0;
+	string resultingBinary;
+	unsigned int maxBinarySize;
+	bool carryBinaryValue = false;
+	// gets the max length of both binary strings
+	if (topBinary.size() > bottomBinary.size())
+		maxBinarySize = topBinary.size();
+	else
+		maxBinarySize = bottomBinary.size();
 
-
-	/*for (unsigned int i = binaryNumber.size; i >= 0; --i)
+	for (unsigned int i = 0; i < maxBinarySize; ++i)
 	{
-		binaryValue += ();
+		bool topBinaryValue, bottomBinaryValue, resultBinaryValue, prelimBinaryValue = false;
+		int topIndex = topBinary.size() - i - 1;
+		int bottomIndex = bottomBinary.size() - i - 1;
+		// check binary strings are in bounds and get value if it 
+		if (topIndex < 0)
+			topBinaryValue = false;
+		else
+			topBinaryValue = charToBool(topBinary[topIndex]);
 
-		++binaryExponent;
-	}*/
+		if (bottomIndex < 0)
+			bottomBinaryValue = false;
+		else
+			bottomBinaryValue = charToBool(bottomBinary[bottomIndex]);
+		//addiing binaries
+		if (carryBinaryValue) // math when there's a carry over value	
+		{		
+			bool prelimCarryValue; 
 
-	return 0;
+			prelimBinaryValue = carryBinaryValue ^ topBinaryValue;
+
+			if (carryBinaryValue & topBinaryValue)
+				prelimCarryValue = true;
+			else
+				prelimCarryValue = false;
+
+			resultBinaryValue = prelimBinaryValue ^ bottomBinaryValue;
+			
+			if (!prelimCarryValue)
+			{
+				if (prelimBinaryValue & bottomBinaryValue)
+					carryBinaryValue = true;
+				else
+					carryBinaryValue = false;
+			}
+			else
+				carryBinaryValue = prelimCarryValue;
+		}
+		else // Normal math
+		{
+			resultBinaryValue = topBinaryValue ^ bottomBinaryValue;
+
+			if (topBinaryValue & bottomBinaryValue)
+				carryBinaryValue = true;
+			else
+				carryBinaryValue = false;
+		}
+		// add binary to resulting string;
+		AddBinary2String(resultingBinary, resultBinaryValue);
+	}
+
+	if (carryBinaryValue)
+		AddBinary2String(resultingBinary, true);
+
+	reverse(resultingBinary.begin(), resultingBinary.end());
+
+	return resultingBinary;
 }
 
+bool AddBinaryNumbers::charToBool(char binaryBool)
+{
+	if (binaryBool == '1')
+		return true;
+
+	return false;
+}
+void AddBinaryNumbers::AddBinary2String(string &resultString, bool binaryNumber)
+{
+	int binaryValue;
+
+	if (binaryNumber)
+		binaryValue = 1;
+	else
+		binaryValue = 0;
+
+	resultString.append(to_string(binaryValue));
+}
+// First Implementation, limited by binary string size
 string AddBinaryNumbers::ConvertBinaryToString(unsigned int binaryNumber)
 {
 	if (binaryNumber == 0)
 		return "0";
 
-	int divisionResult, remainder, exponent = 0;
+	int divisionResult, remainder;
 	string convertedBinary = "";
 	
 	remainder = binaryNumber % BINARY_VALUE; 
@@ -43,14 +122,10 @@ string AddBinaryNumbers::ConvertBinaryToString(unsigned int binaryNumber)
 	{
 		remainder = divisionResult % BINARY_VALUE; 
 		divisionResult /= BINARY_VALUE;
-		++exponent;
 		convertedBinary.append(to_string(remainder));
 	}
 
-	/*if (exponent > 0)
-	{
-		convertedBinary.append(to_string(1));
-	}*/
+	reverse(convertedBinary.begin(), convertedBinary.end());
 
 	return convertedBinary;
 }

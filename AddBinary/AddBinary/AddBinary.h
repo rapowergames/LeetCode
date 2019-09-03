@@ -5,13 +5,17 @@
 
 using namespace std;
 const int BINARY_VALUE = 2;
+const int MAX_STRING_SIZE = 30;
 
 class AddBinaryNumbers
 {
 public:
 	string AddBinary(string a, string b);
 private:
-	int GetBinaryValue(string binaryNumber);
+	string stringAddition(string topBinary, string bottomBinary);
+	bool charToBool(char binaryValue);
+	void AddBinary2String(string & resultString, bool binaryNumber);
+	// Only used in first implementation. It's limited by binary string size
 	string ConvertBinaryToString(unsigned int binaryNumber);
 };
 
