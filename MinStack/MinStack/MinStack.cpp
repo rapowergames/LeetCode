@@ -18,19 +18,28 @@ public:
 
 	}
 
-	void push(int x) {
+	void push(int x) 
+	{
+		if(!_head)
+	}
+
+	void pop() 
+	{
 
 	}
 
-	void pop() {
+	int top() 
+	{
 
 	}
 
-	int top() {
+	int getMin() 
+	{
 
 	}
-
-	int getMin() {
+	// Private Methods & Variables
+	void sortMinFirst()
+	{
 
 	}
 };

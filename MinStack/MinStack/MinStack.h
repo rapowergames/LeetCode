@@ -29,7 +29,10 @@ public:
 	int top();
 	int getMin();
 private:
-	Node *myStack;
+	Node *_myStack;
+	Node *_head;
+
+	void sortMinFirst(void);
 };
 
 #endif // !MINSTACK_H
